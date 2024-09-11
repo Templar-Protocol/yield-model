@@ -93,3 +93,11 @@ Ensure that you have the corresponding CSV files for historical price data in th
 - Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
 - Ethereum_historical_data.csv
 - NEAR_Protocol_historical_data.csv
+
+
+## TODO
+- [ ] connect to frontend
+- [ ] Add more currencies
+- [ ] Add more historical data
+- [ ] standardize the data format for all coins and ensure they all go up to the same timestamp
+- [ ] refactor csv data into a data directory

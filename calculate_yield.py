@@ -15,8 +15,8 @@ def calculate_yield(
     avg_loan_amount
 ):
     # Read historical price data
-    df = pd.read_csv(price_csv, parse_dates=['timeOpen'])
-    df.set_index('timeOpen', inplace=True)
+    df = pd.read_csv(price_csv, parse_dates=['time'])
+    df.set_index('time', inplace=True)
     df.sort_index(inplace=True)
 
     # Initialize variables
