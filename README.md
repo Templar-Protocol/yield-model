@@ -5,14 +5,16 @@ This tool calculates the historical yield for cryptocurrency loans based on vari
 ## Usage
 
 1. Ensure you have Python installed on your system.
-2. Install the required packages:
-   ```
-   pip install -r requirements.txt
-   ```
+2. Setup virtual environment and install the required packages:
+    ```
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    ```
 3. Run the script:
-   ```
-   python main.py
-   ```
+    ```
+    python main.py
+    ```
 4. Follow the interactive prompts to input parameters.
 
 ## Parameters
