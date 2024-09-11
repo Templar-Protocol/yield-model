@@ -71,27 +71,36 @@ def calculate_yield(
 
     return yield_percentage
 
-# Example usage
-price_csv = 'Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv'
-num_loans_per_day = 5
-avg_initial_collateral_ratio = 1.25
-min_collateral_ratio = 1.2
-origination_fee_pct = 0.01  # 1%
-liquidation_spread_pct = 0.05  # 5%
-avg_repayment_days = 300
-avg_slippage_pct = 0.02  # 2%
-loan_amount = 1000  # $1000 per loan
+def get_user_input():
+    print("Please enter the following parameters:")
+    
+    price_csv = input("Cryptocurrency (BTC, ETH, or NEAR) [default: BTC]: ").strip() or "BTC"
+    while price_csv not in ["BTC", "ETH", "NEAR"]:
+        price_csv = input("Invalid choice. Please enter BTC, ETH, or NEAR: ").strip()
 
-yield_pct = calculate_yield(
-    price_csv,
-    num_loans_per_day,
-    avg_initial_collateral_ratio,
-    min_collateral_ratio,
-    origination_fee_pct,
-    liquidation_spread_pct,
-    avg_repayment_days,
-    avg_slippage_pct,
-    loan_amount
-)
+    params = {
+        "num_loans_per_day": int(input("Number of loans per day [default: 5]: ") or 5),
+        "avg_initial_collateral_ratio": float(input("Average initial collateral ratio [default: 1.5]: ") or 1.5),
+        "min_collateral_ratio": float(input("Minimum collateral ratio [default: 1.2]: ") or 1.2),
+        "origination_fee_pct": float(input("Origination fee percentage [default: 0.01]: ") or 0.01),
+        "liquidation_spread_pct": float(input("Liquidation spread percentage [default: 0.70]: ") or 0.70),
+        "avg_repayment_days": int(input("Average repayment days [default: 300]: ") or 300),
+        "avg_slippage_pct": float(input("Average slippage percentage [default: 0.02]: ") or 0.02),
+        "loan_amount": float(input("Loan amount [default: 1000]: ") or 1000)
+    }
 
-print(f"Historical yield: {yield_pct:.2f}%")
+    return price_csv, params
+
+if __name__ == "__main__":
+    csv_files = {
+        'BTC': 'Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv',
+        'ETH': 'Ethereum_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv',
+        'NEAR': 'NEAR Protocol_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv'
+    }
+
+    price_csv, params = get_user_input()
+    price_csv = csv_files[price_csv]
+
+    yield_pct = calculate_yield(price_csv, **params)
+
+    print(f"\nHistorical yield for {price_csv}: {yield_pct:.2f}%")
