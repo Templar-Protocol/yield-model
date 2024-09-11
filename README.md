@@ -6,16 +6,44 @@ This tool calculates the historical yield for templar protocol based on various 
 
 1. Ensure you have Python installed on your system.
 2. Setup virtual environment and install the required packages:
-    ```
+    ```bash
     python3 -m venv venv
     source venv/bin/activate
     pip3 install -r requirements.txt
     ```
-3. Run the script:
-    ```
+
+### Running with user input
+3. Run the script to get user input:
+```bash
+python3 user_input.py
+```
+4. Follow the interactive prompts to input parameters.
+
+### Running the Web Server
+
+3. Start the FastAPI server:
+    ```bash
     python3 main.py
     ```
-4. Follow the interactive prompts to input parameters.
+   This will start the server on `http://localhost:8000`.
+
+4. You can now send POST requests to the `/calculate_yield` endpoint to calculate yields.
+
+The API will return a JSON object with the calculated historical yield as a percentage based on the input parameters and historical price data in the following format:
+```json
+{
+    "yield_percentage":5.645147234051933
+}
+```
+
+
+### Example API Request
+
+Use the following curl command to make a request to the API:
+```bash
+curl -X POST "http://localhost:8000/calculate_yield" -H "Content-Type: application/json" -d '{"price_csv": "BTC", "num_loans_per_day": 5, "avg_initial_collateral_ratio": 1.5, "min_collateral_ratio": 1.2, "origination_fee_pct": 0.01, "liquidation_spread_pct": 0.70, "avg_repayment_days": 300, "avg_slippage_pct": 0.02, "avg_loan_amount": 1000}'
+```
+
 
 ## Parameters
 
