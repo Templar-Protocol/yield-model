@@ -1,6 +1,6 @@
-# Crypto Loan Yield Calculator
+# Templar Protocol Yield Calculator
 
-This tool calculates the historical yield for cryptocurrency loans based on various parameters.
+This tool calculates the historical yield for templar protocol based on various parameters.
 
 ## Usage
 
@@ -9,11 +9,11 @@ This tool calculates the historical yield for cryptocurrency loans based on vari
     ```
     python3 -m venv venv
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
     ```
 3. Run the script:
     ```
-    python main.py
+    python3 main.py
     ```
 4. Follow the interactive prompts to input parameters.
 
@@ -29,6 +29,7 @@ The tool will prompt you for the following parameters:
 
 3. **Average initial collateral ratio**: The mean ratio of collateral value to loan value at loan origination.
    - Default: 1.5 (150% collateralization)
+   - Note: Actual collateral ratios will vary around this average due to the normal distribution.
 
 4. **Minimum collateral ratio**: The threshold below which a loan is liquidated.
    - Default: 1.2 (120% collateralization)
@@ -45,8 +46,9 @@ The tool will prompt you for the following parameters:
 8. **Average slippage percentage**: The expected price slippage during liquidation, as a decimal.
    - Default: 0.02 (2%)
 
-9. **Loan amount**: The principal amount for each loan.
+9. **Average loan amount**: The mean amount for loans. Individual loan amounts are sampled from a lognormal distribution with this mean.
    - Default: 1000 (in the base currency, e.g., USD)
+   - Note: Actual loan amounts will vary around this average due to the normal distribution.
 
 ## Output
 

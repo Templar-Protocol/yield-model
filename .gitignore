@@ -166,3 +166,4 @@ cython_debug/
 
 # Python virtual environment
 yield_model_venv/
+venv/

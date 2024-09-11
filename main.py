@@ -11,7 +11,7 @@ def calculate_yield(
     liquidation_spread_pct,
     avg_repayment_days,
     avg_slippage_pct,
-    loan_amount
+    avg_loan_amount
 ):
     # Read historical price data
     df = pd.read_csv(price_csv, parse_dates=['timeOpen'])
@@ -29,8 +29,9 @@ def calculate_yield(
 
         # Generate new loans
         for _ in range(num_loans_per_day):
-            # for each loan, generate a random initial collateral ratio with the mean being the avg_initial_collateral_ratio
-            # but with a minimum value of min_collateral_ratio + 0.05
+            # Sample loan amount from normal distribution
+            loan_amount = np.random.normal(avg_loan_amount, avg_loan_amount/2)
+            
             initial_collateral_ratio = max(np.random.normal(avg_initial_collateral_ratio, avg_initial_collateral_ratio/4), min_collateral_ratio + 0.05)
             collateral_amount = loan_amount * initial_collateral_ratio / price
             loan = {
@@ -86,7 +87,7 @@ def get_user_input():
         "liquidation_spread_pct": float(input("Liquidation spread percentage [default: 0.70]: ") or 0.70),
         "avg_repayment_days": int(input("Average repayment days [default: 300]: ") or 300),
         "avg_slippage_pct": float(input("Average slippage percentage [default: 0.02]: ") or 0.02),
-        "loan_amount": float(input("Loan amount [default: 1000]: ") or 1000)
+        "avg_loan_amount": float(input("Average loan amount [default: 1000]: ") or 1000)
     }
 
     return price_csv, params
