@@ -71,8 +71,12 @@ def calculate_yield(
         for loan in loans_to_remove:
             loans.remove(loan)
 
-    # Calculate yield as a percentage of total loaned amount
-    yield_percentage = (total_yield / total_loaned) * 100
+        # Calculate yield as a percentage of total loaned amount
+        raw_yield_percentage = (total_yield / total_loaned) * 100
+
+        # Annualize the yield
+        days_in_year = 365
+        annualized_yield_percentage = ((1 + raw_yield_percentage / 100) ** (days_in_year / avg_repayment_days) - 1) * 100
 
     # Get start and end datetimes from the DataFrame
     start_datetime = df.index[0].strftime('%Y-%m-%dT%H:%M:%S.000Z')
@@ -80,7 +84,7 @@ def calculate_yield(
 
     # Prepare the result dictionary
     result = {
-        "yield_percentage": yield_percentage,
+        "apy": annualized_yield_percentage,
         "start_datetime": start_datetime,
         "end_datetime": end_datetime,
         "parameters": {

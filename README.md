@@ -1,12 +1,12 @@
 # Templar Protocol Yield Calculator
 
-This tool calculates the historical yield for templar protocol based on various parameters. Note that the yield is calculated as the percentage gain on the total amount of the loan, which is impacted by the avg_repayment_days parameter.
+This tool calculates the historical yield for templar protocol based on various parameters. 
 
 ## Preliminary Results
-Using default parameters - see Parameters section - the following are the yields calculated:
-1. BTC 2023-09-12 to 2024-09-11: 5.71%
-2. ETH 2023-09-12 to 2024-09-11: 6.51%
-3. NEAR 2023-09-12 to 2024-09-11: 6.99%
+Using default parameters - see Parameters section - the following are the APY yields calculated:
+1. BTC 2023-09-12 to 2024-09-11: 6.55%
+2. ETH 2023-09-12 to 2024-09-11: 7.84%
+3. NEAR 2023-09-12 to 2024-09-11: 8.45%
 
 ## Usage
 
@@ -38,7 +38,7 @@ python3 user_input.py
 The API will return a JSON object with the calculated historical yield as a percentage based on the input parameters and historical price data in the following format:
 ```json
 {
-  "yield_percentage": 5.645147234051933,
+  "apy": 6.552750004636021,
   "start_datetime": "2023-09-12T00:00:00.000Z",
   "end_datetime": "2024-09-11T00:00:00.000Z",
   "parameters": {
@@ -86,7 +86,7 @@ curl -X POST "http://localhost:8080/calculate_yield" -H "Content-Type: applicati
 will return
 ```json
 {
-  "yield_percentage": 5.645147234051933,
+  "apy": 6.552750004636021,
   "start_datetime": "2023-09-12T00:00:00.000Z",
   "end_datetime": "2024-09-11T00:00:00.000Z",
   "parameters": {
