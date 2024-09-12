@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from datetime import timedelta
+import json
+from datetime import datetime
 
 
 def calculate_yield(
@@ -72,4 +74,26 @@ def calculate_yield(
     # Calculate yield as a percentage of total loaned amount
     yield_percentage = (total_yield / total_loaned) * 100
 
-    return yield_percentage
+    # Get start and end datetimes from the DataFrame
+    start_datetime = df.index[0].strftime('%Y-%m-%dT%H:%M:%S.000Z')
+    end_datetime = df.index[-1].strftime('%Y-%m-%dT%H:%M:%S.000Z')
+
+    # Prepare the result dictionary
+    result = {
+        "yield_percentage": yield_percentage,
+        "start_datetime": start_datetime,
+        "end_datetime": end_datetime,
+        "parameters": {
+            "price_csv": price_csv,
+            "num_loans_per_day": num_loans_per_day,
+            "avg_initial_collateral_ratio": avg_initial_collateral_ratio,
+            "min_collateral_ratio": min_collateral_ratio,
+            "origination_fee_pct": origination_fee_pct,
+            "liquidation_spread_pct": liquidation_spread_pct,
+            "avg_repayment_days": avg_repayment_days,
+            "avg_slippage_pct": avg_slippage_pct,
+            "avg_loan_amount": avg_loan_amount
+        }
+    }
+
+    return result

@@ -27,7 +27,7 @@ async def api_calculate_yield(params: YieldParams):
     price_csv = CSV_FILES[params.price_csv]
 
     try:
-        yield_pct = calculate_yield(
+        result = calculate_yield(
             price_csv,
             params.num_loans_per_day,
             params.avg_initial_collateral_ratio,
@@ -38,7 +38,7 @@ async def api_calculate_yield(params: YieldParams):
             params.avg_slippage_pct,
             params.avg_loan_amount
         )
-        return {"yield_percentage": yield_pct}
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

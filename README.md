@@ -32,7 +32,20 @@ python3 user_input.py
 The API will return a JSON object with the calculated historical yield as a percentage based on the input parameters and historical price data in the following format:
 ```json
 {
-    "yield_percentage":5.645147234051933
+  "yield_percentage": 5.645147234051933,
+  "start_datetime": "2023-09-12T00:00:00.000Z",
+  "end_datetime": "2024-09-11T00:00:00.000Z",
+  "parameters": {
+    "price_csv": "Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv",
+    "num_loans_per_day": 5,
+    "avg_initial_collateral_ratio": 1.5,
+    "min_collateral_ratio": 1.2,
+    "origination_fee_pct": 0.01,
+    "liquidation_spread_pct": 0.7,
+    "avg_repayment_days": 300,
+    "avg_slippage_pct": 0.02,
+    "avg_loan_amount": 1000
+  }
 }
 ```
 
@@ -41,7 +54,26 @@ The API will return a JSON object with the calculated historical yield as a perc
 
 Use the following curl command to make a request to the API:
 ```bash
-curl -X POST "http://localhost:8000/calculate_yield" -H "Content-Type: application/json" -d '{"price_csv": "BTC", "num_loans_per_day": 5, "avg_initial_collateral_ratio": 1.5, "min_collateral_ratio": 1.2, "origination_fee_pct": 0.01, "liquidation_spread_pct": 0.70, "avg_repayment_days": 300, "avg_slippage_pct": 0.02, "avg_loan_amount": 1000}'
+curl -X POST "http://localhost:8000/calculate_yield" -H "Content-Type: application/json" -d '{"price_csv": "BTC_1y_cmc", "num_loans_per_day": 5, "avg_initial_collateral_ratio": 1.5, "min_collateral_ratio": 1.2, "origination_fee_pct": 0.01, "liquidation_spread_pct": 0.70, "avg_repayment_days": 300, "avg_slippage_pct": 0.02, "avg_loan_amount": 1000}'
+```
+will return
+```json
+{
+  "yield_percentage": 5.645147234051933,
+  "start_datetime": "2023-09-12T00:00:00.000Z",
+  "end_datetime": "2024-09-11T00:00:00.000Z",
+  "parameters": {
+    "price_csv": "Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv",
+    "num_loans_per_day": 5,
+    "avg_initial_collateral_ratio": 1.5,
+    "min_collateral_ratio": 1.2,
+    "origination_fee_pct": 0.01,
+    "liquidation_spread_pct": 0.7,
+    "avg_repayment_days": 300,
+    "avg_slippage_pct": 0.02,
+    "avg_loan_amount": 1000
+  }
+}
 ```
 
 
@@ -89,15 +121,23 @@ The script will output the calculated historical yield as a percentage based on 
 - The liquidation happens at the low of the day (since we don't have intraday data currently). This means that the yield is underestimated.
 
 ### Historical Price Data
-Ensure that you have the corresponding CSV files for historical price data in the same directory as the script:
+The historical price data is stored in the `data` directory and is taken from coinmarketcap and kraken (note the kraken data was originally in OHLCV format, which is converted to a price csv in the `convert_utc_to_timestamp.py` script and the data stops either at the beginning of 2024 or end of Q1 2024):
 - Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
-- Ethereum_historical_data.csv
-- NEAR_Protocol_historical_data.csv
+- Ethereum_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
+- NEAR_Protocol_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
+- converted_BTCUSD_Daily_OHLCV.csv
+- converted_ETHUSD_1440.csv
+- converted_NEARUSD_1440.csv
+- converted_XRPUSD_1440.csv
+- converted_LTCUSD_1440.csv
+- converted_SOLUSD_1440.csv
+- converted_BONKUSD_1440.csv
+- converted_ADAUSD_1440.csv
 
 
 ## TODO
 - [ ] connect to frontend
-- [ ] Add more currencies
-- [ ] Add more historical data
+- [x] Add more currencies
+- [x] Add more historical data
 - [ ] standardize the data format for all coins and ensure they all go up to the same timestamp
-- [ ] refactor csv data into a data directory
+- [x] refactor csv data into a data directory
