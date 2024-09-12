@@ -1,6 +1,6 @@
 # Templar Protocol Yield Calculator
 
-This tool calculates the historical yield for templar protocol based on various parameters.
+This tool calculates the historical yield for templar protocol based on various parameters. Note that the yield is calculated as the percentage gain on the total amount of the loan, which is impacted by the avg_repayment_days parameter.
 
 ## Preliminary Results
 Using default parameters - see Parameters section - the following are the yields calculated:
@@ -164,7 +164,8 @@ The historical price data is stored in the `data` directory and is taken from co
 
 ## TODO
 - [ ] connect to frontend
+- [ ] standardize the data format for all coins and ensure they all go up to the same timestamp
+- [ ] add parameter for calculating yield for a custom date range
 - [x] Add more currencies
 - [x] Add more historical data
-- [ ] standardize the data format for all coins and ensure they all go up to the same timestamp
 - [x] refactor csv data into a data directory

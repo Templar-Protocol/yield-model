@@ -25,6 +25,4 @@ if __name__ == "__main__":
     price_csv, params = get_user_input()
     price_csv = CSV_FILES[price_csv]
 
-    yield_pct = calculate_yield(price_csv, **params)
-
-    print(f"\nHistorical yield for {price_csv}: {yield_pct:.2f}%")
+    print(calculate_yield(price_csv, **params))
