@@ -19,13 +19,13 @@ python3 user_input.py
 ```
 4. Follow the interactive prompts to input parameters.
 
-### Running the Web Server
+### Running the Web Server Locally
 
 3. Start the FastAPI server:
     ```bash
     python3 main.py
     ```
-   This will start the server on `http://localhost:8000`.
+   This will start the server on `http://localhost:8080`.
 
 4. You can now send POST requests to the `/calculate_yield` endpoint to calculate yields.
 
@@ -50,7 +50,7 @@ The API will return a JSON object with the calculated historical yield as a perc
 ```
 5. You can also get a list of available cryptocurrency csv files that can be used for yield calculation by sending a GET request to the `/available_crypto` endpoint:
 ```bash
-curl -X GET "http://localhost:8000/available_crypto"
+curl -X GET "http://localhost:8080/available_crypto"
 ```
 This will return a JSON object with the list of available cryptocurrency csv files:
 ```json
@@ -59,12 +59,23 @@ This will return a JSON object with the list of available cryptocurrency csv fil
 }
 ```
 
+### Running the Web Server with Docker
+
+1. Build the Docker image:
+```bash
+docker build -t yield-calculator .
+```
+2. Run the Docker container:
+```bash
+docker run -d -p 8080:8080 yield-calculator
+```
+
 
 ### Example API Request
 
 Use the following curl command to make a request to the API:
 ```bash
-curl -X POST "http://localhost:8000/calculate_yield" -H "Content-Type: application/json" -d '{"price_csv": "BTC_1y_cmc", "num_loans_per_day": 5, "avg_initial_collateral_ratio": 1.5, "min_collateral_ratio": 1.2, "origination_fee_pct": 0.01, "liquidation_spread_pct": 0.70, "avg_repayment_days": 300, "avg_slippage_pct": 0.02, "avg_loan_amount": 1000}'
+curl -X POST "http://localhost:8080/calculate_yield" -H "Content-Type: application/json" -d '{"price_csv": "BTC_1y_cmc", "num_loans_per_day": 5, "avg_initial_collateral_ratio": 1.5, "min_collateral_ratio": 1.2, "origination_fee_pct": 0.01, "liquidation_spread_pct": 0.70, "avg_repayment_days": 300, "avg_slippage_pct": 0.02, "avg_loan_amount": 1000}'
 ```
 will return
 ```json
