@@ -2,6 +2,12 @@
 
 This tool calculates the historical yield for templar protocol based on various parameters.
 
+## Preliminary Results
+Using default parameters - see Parameters section - the following are the yields calculated:
+1. BTC 2023-09-12 to 2024-09-11: 5.71%
+2. ETH 2023-09-12 to 2024-09-11: 6.51%
+3. NEAR 2023-09-12 to 2024-09-11: 6.99%
+
 ## Usage
 
 1. Ensure you have Python installed on your system.
