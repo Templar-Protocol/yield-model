@@ -48,6 +48,16 @@ The API will return a JSON object with the calculated historical yield as a perc
   }
 }
 ```
+5. You can also get a list of available cryptocurrency csv files that can be used for yield calculation by sending a GET request to the `/available_crypto` endpoint:
+```bash
+curl -X GET "http://localhost:8000/available_crypto"
+```
+This will return a JSON object with the list of available cryptocurrency csv files:
+```json
+{
+    "available_crypto":["BTC_1y_cmc","ETH_1y_cmc","NEAR_1y_cmc","BTC","ETH","NEAR","XRP","LTC","SOL","BONK","ADA"]
+}
+```
 
 
 ### Example API Request

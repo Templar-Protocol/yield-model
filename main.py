@@ -19,6 +19,15 @@ class YieldParams(BaseModel):
     avg_slippage_pct: float
     avg_loan_amount: float
 
+@app.get("/available_crypto")
+async def get_available_crypto():
+    """
+    Returns a list of available cryptocurrencies that can be used for yield calculation.
+    """
+    return {
+        "available_crypto": list(CSV_FILES.keys())
+    }
+
 @app.post("/calculate_yield")
 async def api_calculate_yield(params: YieldParams):
     if params.price_csv not in CSV_FILES:
