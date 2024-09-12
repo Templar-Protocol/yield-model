@@ -4,9 +4,9 @@ from CSV_FILES import CSV_FILES
 def get_user_input():
     print("Please enter the following parameters:")
     
-    price_csv = input("Cryptocurrency (BTC, ETH, or NEAR) [default: BTC]: ").strip() or "BTC"
-    while price_csv not in ["BTC", "ETH", "NEAR"]:
-        price_csv = input("Invalid choice. Please enter BTC, ETH, or NEAR: ").strip()
+    price_csv = input("Cryptocurrency (BTC_1y_cmc, ETH_1y_cmc, NEAR_1y_cmc, BTC, ETH, NEAR, XRP, LTC, SOL, BONK, ADA) [default: BTC_1y_cmc]: ").strip() or "BTC_1y_cmc"
+    while price_csv not in ["BTC_1y_cmc", "ETH_1y_cmc", "NEAR_1y_cmc", "BTC", "ETH", "NEAR", "XRP", "LTC", "SOL", "BONK", "ADA"]:
+        price_csv = input("Invalid choice. Please enter BTC_1y_cmc, ETH_1y_cmc, NEAR_1y_cmc, BTC, ETH, NEAR, XRP, LTC, SOL, BONK, ADA: ").strip()
 
     params = {
         "num_loans_per_day": int(input("Number of loans per day [default: 5]: ") or 5),
