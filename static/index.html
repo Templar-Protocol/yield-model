@@ -66,15 +66,19 @@
 
         document.getElementById('yieldForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-
-            // Convert string values to numbers
-            for (let key in data) {
-                if (key !== 'price_csv') {
-                    data[key] = Number(data[key]);
-                }
-            }
+            
+            // Manually collect all form data, including fields with default values
+            const data = {
+                price_csv: document.getElementById('price_csv').value,
+                num_loans_per_day: Number(document.getElementById('num_loans_per_day').value),
+                avg_initial_collateral_ratio: Number(document.getElementById('avg_initial_collateral_ratio').value),
+                min_collateral_ratio: Number(document.getElementById('min_collateral_ratio').value),
+                origination_fee_pct: Number(document.getElementById('origination_fee_pct').value),
+                liquidation_spread_pct: Number(document.getElementById('liquidation_spread_pct').value),
+                avg_repayment_days: Number(document.getElementById('avg_repayment_days').value),
+                avg_slippage_pct: Number(document.getElementById('avg_slippage_pct').value),
+                avg_loan_amount: Number(document.getElementById('avg_loan_amount').value)
+            };
 
             fetch(`${API_URL}/calculate_yield`, {
                 method: 'POST',
@@ -83,13 +87,18 @@
                 },
                 body: JSON.stringify(data),
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => Promise.reject(err));
+                }
+                return response.json();
+            })
             .then(result => {
                 document.getElementById('result').textContent = JSON.stringify(result, null, 2);
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('result').textContent = 'An error occurred. Please try again.';
+                document.getElementById('result').textContent = `An error occurred: ${JSON.stringify(error, null, 2)}`;
             });
         });
     </script>
