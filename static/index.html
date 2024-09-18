@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templar Protocol Yield Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #333; }
+        label { display: inline-block; width: 200px; margin-bottom: 10px; }
+        input, select { width: 200px; }
+        button { margin-top: 20px; padding: 10px 20px; }
+        #result { margin-top: 20px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Templar Protocol Yield Calculator</h1>
+    <form id="yieldForm">
+        <label for="price_csv">Cryptocurrency:</label>
+        <select id="price_csv" required></select><br>
+
+        <label for="num_loans_per_day">Number of loans per day:</label>
+        <input type="number" id="num_loans_per_day" value="5" required><br>
+
+        <label for="avg_initial_collateral_ratio">Avg initial collateral ratio:</label>
+        <input type="number" id="avg_initial_collateral_ratio" value="1.5" step="0.1" required><br>
+
+        <label for="min_collateral_ratio">Min collateral ratio:</label>
+        <input type="number" id="min_collateral_ratio" value="1.2" step="0.1" required><br>
+
+        <label for="origination_fee_pct">Origination fee %:</label>
+        <input type="number" id="origination_fee_pct" value="0.01" step="0.01" required><br>
+
+        <label for="liquidation_spread_pct">Liquidation spread %:</label>
+        <input type="number" id="liquidation_spread_pct" value="0.70" step="0.01" required><br>
+
+        <label for="avg_repayment_days">Avg repayment days:</label>
+        <input type="number" id="avg_repayment_days" value="300" required><br>
+
+        <label for="avg_slippage_pct">Avg slippage %:</label>
+        <input type="number" id="avg_slippage_pct" value="0.02" step="0.01" required><br>
+
+        <label for="avg_loan_amount">Avg loan amount:</label>
+        <input type="number" id="avg_loan_amount" value="1000" required><br>
+
+        <button type="submit">Calculate Yield</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api';
+
+        // Fetch available cryptocurrencies and populate the select element
+        fetch(`${API_URL}/available_crypto`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('price_csv');
+                data.available_crypto.forEach(crypto => {
+                    const option = document.createElement('option');
+                    option.value = crypto;
+                    option.textContent = crypto;
+                    select.appendChild(option);
+                });
+            });
+
+        document.getElementById('yieldForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            // Convert string values to numbers
+            for (let key in data) {
+                if (key !== 'price_csv') {
+                    data[key] = Number(data[key]);
+                }
+            }
+
+            fetch(`${API_URL}/calculate_yield`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'An error occurred. Please try again.';
+            });
+        });
+    </script>
+</body>
+</html>
