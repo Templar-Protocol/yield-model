@@ -76,6 +76,44 @@ docker build -t yield-calculator .
 docker run -d -p 8080:8080 yield-calculator
 ```
 
+### Running the Web Application with Frontend
+
+To run the full web application with the frontend:
+
+1. Ensure you have Python installed on your system.
+
+2. Setup virtual environment and install the required packages:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    pip3 install -r requirements.txt
+    ```
+
+3. Start the FastAPI server using Uvicorn:
+    ```bash
+    uvicorn main:app --reload
+    ```
+   This will start the server on `http://localhost:8000`.
+
+4. Open a web browser and navigate to `http://localhost:8000/index.html`. You should see the Templar Protocol Yield Calculator interface.
+
+5. Use the form to input your parameters:
+   - Select a cryptocurrency from the dropdown menu.
+   - Adjust other parameters as needed (they are pre-filled with default values).
+   - Click the "Calculate Yield" button to submit the form.
+
+6. The calculated yield will be displayed below the form.
+
+Note: Ensure that your browser allows JavaScript to run on the page, as it's required for the frontend functionality.
+
+### Troubleshooting
+
+If you encounter any issues:
+- Make sure the server is running on port 8000.
+- Check the browser's console (F12 > Console tab) for any error messages.
+- Verify that all required fields in the form are filled before submission.
+- If you're unable to access the page, try navigating to `http://localhost:8000` (without `/index.html`) as a fallback.
+
 
 ### Example API Request
 
@@ -163,9 +201,10 @@ The historical price data is stored in the `data` directory and is taken from co
 
 
 ## TODO
-- [ ] connect to frontend
+- [x] connect to frontend
 - [ ] standardize the data format for all coins and ensure they all go up to the same timestamp
 - [ ] add parameter for calculating yield for a custom date range
 - [x] Add more currencies
 - [x] Add more historical data
 - [x] refactor csv data into a data directory
+

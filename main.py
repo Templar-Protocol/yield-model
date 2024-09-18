@@ -1,12 +1,28 @@
 import uvicorn
+import os
 
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from CSV_FILES import CSV_FILES
 from calculate_yield import calculate_yield
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+# API routes
+api_router = APIRouter()
 
 class YieldParams(BaseModel):
     price_csv: str
@@ -19,7 +35,7 @@ class YieldParams(BaseModel):
     avg_slippage_pct: float
     avg_loan_amount: float
 
-@app.get("/available_crypto")
+@api_router.get("/available_crypto")
 async def get_available_crypto():
     """
     Returns a list of available cryptocurrencies that can be used for yield calculation.
@@ -28,7 +44,7 @@ async def get_available_crypto():
         "available_crypto": list(CSV_FILES.keys())
     }
 
-@app.post("/calculate_yield")
+@api_router.post("/calculate_yield")
 async def api_calculate_yield(params: YieldParams):
     if params.price_csv not in CSV_FILES:
         raise HTTPException(status_code=400, detail="Invalid cryptocurrency choice")
@@ -51,5 +67,16 @@ async def api_calculate_yield(params: YieldParams):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+app.include_router(api_router, prefix="/api")
+
+@app.get("/")
+@app.get("/index.html")
+async def read_index():
+    return FileResponse('static/index.html')
+
+# Mount the static files directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)

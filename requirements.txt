@@ -1,4 +1,5 @@
+aiofiles
+fastapi
 pandas
 numpy
-fastapi
 uvicorn
