@@ -153,7 +153,7 @@ The tool will prompt you for the following parameters:
    - Default: 5
 
 3. **Average initial collateral ratio**: The mean ratio of collateral value to loan value at loan origination.
-   - Default: 1.5 (150% collateralization)
+   - Default: 2 (200% collateralization)
    - Note: Actual collateral ratios will vary around this average due to the normal distribution.
 
 4. **Minimum collateral ratio**: The threshold below which a loan is liquidated.
@@ -163,7 +163,7 @@ The tool will prompt you for the following parameters:
    - Default: 0.01 (1%)
 
 6. **Liquidation spread percentage**: The percentage of the loan that goes to the lender as a form of yield during liquidation, as a decimal.
-   - Default: 0.70 (70%)
+   - Default: 0.50 (50%)
 
 7. **Average repayment days**: The mean duration of loans before repayment.
    - Default: 300 days
@@ -187,6 +187,7 @@ The script will output the calculated historical yield as a percentage based on 
 
 ### Historical Price Data
 The historical price data is stored in the `data` directory and is taken from coinmarketcap and kraken (note the kraken data was originally in OHLCV format, which is converted to a price csv in the `convert_utc_to_timestamp.py` script and the data stops either at the beginning of 2024 or end of Q1 2024):
+- Bitcoin_5yr.csv
 - Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
 - Ethereum_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
 - NEAR_Protocol_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
