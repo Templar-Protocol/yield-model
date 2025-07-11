@@ -187,7 +187,7 @@ The script will output the calculated historical yield as a percentage based on 
 
 ### Historical Price Data
 The historical price data is stored in the `data` directory and is taken from coinmarketcap and kraken (note the kraken data was originally in OHLCV format, which is converted to a price csv in the `convert_utc_to_timestamp.py` script and the data stops either at the beginning of 2024 or end of Q1 2024):
-- Bitcoin_5yr.csv
+- BTCUSD_5y.csv
 - Bitcoin_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
 - Ethereum_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
 - NEAR_Protocol_9_12_2023-9_11_2024_historical_data_coinmarketcap.csv
